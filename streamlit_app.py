@@ -49,6 +49,8 @@ if ingredient_list:
     if agree:
       order_filled = 'TRUE'
       st.write(order_filled)
+    else:
+      order_filled = 'FALSE'
   
   
     my_insert_stmt = """ insert into smoothies.public.orders(order_filled, ingredients, name_on_order)

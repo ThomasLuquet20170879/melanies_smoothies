@@ -16,6 +16,10 @@ st.write("The name on your smoothie will be :", name_on_order)
 
 cnx = st.connection("snowflake")
 session = cnx.session()
+
+my_dataframe_bis = session.table("smoothies.public.orders").select(col('order_filled'),col('name_on_order'),col('ingredients'))
+editable_df = st.data_editor(my_dataframe_bis)
+
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
 
 pd_df = my_dataframe.to_pandas()
@@ -42,8 +46,6 @@ if ingredient_list:
       
     st.write(ingredients_string)
   
-    my_dataframe_bis = session.table("smoothies.public.orders").select(col('order_filled'),col('name_on_order'),col('ingredients'))
-    editable_df = st.data_editor(my_dataframe_bis)
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
             values ('""" + ingredients_string + """','""" + name_on_order + """' )"""
 

@@ -19,7 +19,7 @@ session = cnx.session()
 
 my_dataframe_bis = session.table("smoothies.public.orders").select(col('order_filled'),col('name_on_order'),col('ingredients'))
 editable_df = st.data_editor(my_dataframe_bis)
-
+      
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
 
 pd_df = my_dataframe.to_pandas()
@@ -45,9 +45,14 @@ if ingredient_list:
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
       
     st.write(ingredients_string)
+    agree = st.checkbox("Filled")
+    if agree:
+      order_filled = 'TRUE'
+      st.write(order_filled)
   
-    my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
-            values ('""" + ingredients_string + """','""" + name_on_order + """' )"""
+  
+    my_insert_stmt = """ insert into smoothies.public.orders(order_filled, ingredients, name_on_order)
+            values ('""" + order_filled + """','""" + ingredients_string + """','""" + name_on_order + """' )"""
 
     #st.write(my_insert_stmt)
     time_to_insert = st.button('Submit Order')

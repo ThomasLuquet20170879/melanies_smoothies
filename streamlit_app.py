@@ -31,12 +31,9 @@ if ingredient_list:
 
     for fruit_chosen in ingredient_list:
         ingredients_string += fruit_chosen + ' '
-        row = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON']
-        if not row.empty:
-          search_on = row.iloc[0]
-        else:
-          st.error(f"No SEARCH_ON value found for {fruit_chosen}")
-          st.stop()
+      
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
           
         st.subheader(fruit_chosen+ ' Nutrition Information')
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
